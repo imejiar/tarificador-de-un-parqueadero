@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JSFiddle nmeq80kz</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f3f3;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #1e3a5f;
+      color: white;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    header img {
+      width: 80px;
+      height: auto;
+    }
+
+    .container {
+      max-width: 600px;
+      background: white;
+      padding: 20px;
+      margin: 30px auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background: #1e3a5f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #274d78;
+    }
+
+    .resultado {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e8f0ff;
+      border-left: 5px solid #1e3a5f;
+      border-radius: 5px;
+    }
+  </style>
+
+  
+</head>
+<body>
+  <header>
+    <!-- Reemplazar el src por la URL del logo real -->
+    <img src="https://i.ibb.co/KpmvzdB8/logo-1.png" alt="" />
+    <div>
+      <h1>Parqueadero Nacional</h1>
+      <p>Propietario: Iván Gabriel Mejía</p>
+      <p>Contacto: 3222314719</p>
+    </div>
+  </header>
+
+  <div class="container">
+    <h2>Tarificador de Parqueadero</h2>
+
+    <label for="tipo">Tipo de vehículo:</label>
+    <select id="tipo">
+      <option value="motocicleta">Motocicleta - $30/min</option>
+      <option value="vehiculo">Vehículo - $65/min</option>
+      <option value="camion">Camión - $90/min</option>
+    </select>
+
+    <label for="inicio">Hora de ingreso:</label>
+    <input type="datetime-local" id="inicio" />
+
+    <label for="fin">Hora de salida:</label>
+    <input type="datetime-local" id="fin" />
+
+    <button onclick="calcular()">Calcular Tarifa</button>
+
+    <div class="resultado" id="resultado" style="display:none;"></div>
+  </div>
+
+  <script>
+    function calcular() {
+      const tipo = document.getElementById("tipo").value;
+      const inicio = new Date(document.getElementById("inicio").value);
+      const fin = new Date(document.getElementById("fin").value);
+
+      if (!inicio || !fin || fin <= inicio) {
+        alert("Por favor ingrese fechas y horas válidas.");
+        return;
+      }
+
+      const tarifas = {
+        motocicleta: 30,
+        vehiculo: 65,
+        camion: 90
+      };
+
+      const minutos = Math.floor((fin - inicio) / 60000);
+      const valorFinal = minutos * tarifas[tipo];
+
+      const resultado = document.getElementById("resultado");
+      resultado.style.display = "block";
+      resultado.innerHTML = `
+        <h3>Factura</h3>
+        <p><strong>Tipo de vehículo:</strong> ${tipo}</p>
+        <p><strong>Tiempo total:</strong> ${minutos} minutos</p>
+        <p><strong>Valor a pagar:</strong> $${valorFinal}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
